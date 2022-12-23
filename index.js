@@ -11,13 +11,17 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(require('./routes/book'));
-app.use(require('./routes/metadata'));
+// app.use(require('./api/book'));
+// app.use(require('./api/metadata'));
 
 // Global error handling
 app.use(function (err, _req, res) {
   console.error(err.stack);
   res.status(500).send('Something broke!');
+});
+
+app.get("/", (req, res) => {
+  res.send("Express on Vercel");
 });
 
 // perform a database connection when the server starts
@@ -32,3 +36,6 @@ dbo.connectToServer(function (err) {
     console.log(`Server is running on port: ${PORT}`);
   });
 });
+
+// Export the Express API
+module.exports = app;
